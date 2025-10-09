@@ -5,14 +5,14 @@ import { MAX_GUESSES, WORD_LENGTH } from "@/lib/config";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import dictionary from "@/data/dictionary.json";
+import words from "@/data/words.json";
 import { toast } from "sonner";
 
-interface GameProps {
-  word: string;
-}
-
-export default function Game({ word }: GameProps) {
-  const WORD = word.toUpperCase();
+export default function Game() {
+  const [currentWord, setCurrentWord] = useState(() =>
+    words[Math.floor(Math.random() * words.length)].toUpperCase()
+  );
+  const WORD = currentWord;
 
   const DICTIONARY = useMemo(
     () => new Set(dictionary.map((word) => word.toUpperCase())),
@@ -26,6 +26,17 @@ export default function Game({ word }: GameProps) {
   const [keyStates, setKeyStates] = useState<
     Record<string, "correct" | "present" | "absent">
   >({});
+
+  const resetGame = useCallback(() => {
+    setGuesses([]);
+    setCurrentGuess("");
+    setGameOver(false);
+    setMessage("");
+    setKeyStates({});
+    setCurrentWord(
+      words[Math.floor(Math.random() * words.length)].toUpperCase()
+    );
+  }, []);
 
   const evaluteGuess = useCallback(
     (guess: string) => {
@@ -165,9 +176,7 @@ export default function Game({ word }: GameProps) {
 
       <div className=" flex flex-col gap-4 items-center justify-center">
         {message && <p className="text-xl">{message}</p>}
-        {gameOver && (
-          <Button onClick={() => window.location.reload()}>Play Again</Button>
-        )}
+        {gameOver && <Button onClick={resetGame}>Play Again</Button>}
       </div>
 
       <div className="flex justify-center">
