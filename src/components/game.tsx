@@ -4,6 +4,8 @@ import Keyboard from "@/components/keyboard";
 import { MAX_GUESSES, WORD_LENGTH } from "@/lib/config";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "./ui/button";
+import dictionary from "@/data/dictionary.json";
+import { toast } from "sonner";
 
 interface GameProps {
   word: string;
@@ -11,6 +13,11 @@ interface GameProps {
 
 export default function Game({ word }: GameProps) {
   const WORD = word.toUpperCase();
+
+  const DICTIONARY = useMemo(
+    () => new Set(dictionary.map((word) => word.toUpperCase())),
+    []
+  );
 
   const [guesses, setGuesses] = useState<string[]>([]);
   const [currentGuess, setCurrentGuess] = useState("");
@@ -41,6 +48,12 @@ export default function Game({ word }: GameProps) {
       if (gameOver || guess.length !== WORD_LENGTH) return;
 
       const normalized = guess.toUpperCase();
+
+      if (!DICTIONARY.has(normalized))
+        return toast.error("Word not in list", {
+          position: "top-center",
+        });
+
       setGuesses((prev) => [...prev, normalized]);
       setCurrentGuess("");
 

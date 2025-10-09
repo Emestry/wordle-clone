@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
@@ -17,6 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className={` ${geistMono.className} dark antialiased`}>
         {children}
+        <Toaster />
       </body>
     </html>
   );
