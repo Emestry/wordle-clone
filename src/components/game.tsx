@@ -3,7 +3,7 @@
 import Keyboard from "@/components/keyboard";
 import { MAX_GUESSES, WORD_LENGTH } from "@/lib/config";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import dictionary from "@/data/dictionary.json";
 import { toast } from "sonner";
 
@@ -69,7 +69,7 @@ export default function Game({ word }: GameProps) {
         setGameOver(true);
       }
     },
-    [WORD, gameOver, evaluteGuess, guesses.length]
+    [WORD, gameOver, evaluteGuess, guesses.length, DICTIONARY]
   );
 
   const handleKeyPress = useCallback(
