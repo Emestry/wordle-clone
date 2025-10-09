@@ -137,7 +137,7 @@ export default function Game({ word }: GameProps) {
             {Array.from({ length: WORD_LENGTH }, (_, j) => (
               <div
                 key={j}
-                className="size-12 flex items-center justify-center font-bold rounded bg-secondary/50"
+                className="size-12 flex items-center justify-center font-bold rounded bg-secondary"
               >
                 {currentGuess[j] || ""}
               </div>
@@ -151,7 +151,7 @@ export default function Game({ word }: GameProps) {
           {Array.from({ length: WORD_LENGTH }, (_, j) => (
             <div
               key={j}
-              className="size-12 flex items-center justify-center font-bold rounded bg-secondary/50"
+              className="size-12 flex items-center justify-center font-bold rounded bg-secondary"
             />
           ))}
         </div>
